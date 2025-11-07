@@ -15,7 +15,11 @@ def main():
     train_dataset, test_dataset = dataset["train"], dataset["test"]
 
     ## Prepare base model
-    model = TicketTriageModel(id2label=id2label, model_name="fastino/gliner2-large-v1")
+    model = TicketTriageModel(
+        id2label=id2label,
+        model_name="fastino/gliner2-base-v1",
+        threshold=0.65
+    )
 
     zshot_dataset = model.get_predictions_from_dataset(test_dataset, batch_size=64)
     zshot_dataset.to_parquet(f"output/{model.model_name.replace('/',"_")}_preds.parquet")
